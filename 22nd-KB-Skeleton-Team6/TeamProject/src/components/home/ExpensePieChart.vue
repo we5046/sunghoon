@@ -1,44 +1,41 @@
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import { Pie } from 'vue-chartjs'
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend
-} from 'chart.js'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const props = defineProps<{
-  data?: {
-    category: string
-    value: number
-    color: string
-  }[]
-}>()
+const props = defineProps({
+  data: {
+    type: Array,
+    default: null,
+  },
+})
 
-const mockData = computed(() => props.data || [
-  { category: '식비', value: 450000, color: '#FF8A3D' },
-  { category: '교통', value: 120000, color: '#4A90E2' },
-  { category: '주거통신', value: 180000, color: '#7B68EE' },
-  { category: '쇼핑', value: 230000, color: '#E91E63' },
-  { category: '의료', value: 150000, color: '#4CAF50' },
-  { category: '문화', value: 140000, color: '#FFBC50' },
-  { category: '기타', value: 90000, color: '#9E9E9E' },
-])
+const mockData = computed(
+  () =>
+    props.data || [
+      { category: '식비', value: 450000, color: '#FF8A3D' },
+      { category: '교통', value: 120000, color: '#4A90E2' },
+      { category: '주거통신', value: 180000, color: '#7B68EE' },
+      { category: '쇼핑', value: 230000, color: '#E91E63' },
+      { category: '의료', value: 150000, color: '#4CAF50' },
+      { category: '문화', value: 140000, color: '#FFBC50' },
+      { category: '기타', value: 90000, color: '#9E9E9E' },
+    ],
+)
 
 const total = computed(() => mockData.value.reduce((sum, item) => sum + item.value, 0))
 
 const chartData = computed(() => ({
-  labels: mockData.value.map(item => item.category),
+  labels: mockData.value.map((item) => item.category),
   datasets: [
     {
-      backgroundColor: mockData.value.map(item => item.color),
-      data: mockData.value.map(item => item.value),
+      backgroundColor: mockData.value.map((item) => item.color),
+      data: mockData.value.map((item) => item.value),
       borderWidth: 0,
-    }
-  ]
+    },
+  ],
 }))
 
 const chartOptions = {
@@ -46,8 +43,8 @@ const chartOptions = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      display: false
-    }
+      display: false,
+    },
   },
   cutout: '60%',
 }

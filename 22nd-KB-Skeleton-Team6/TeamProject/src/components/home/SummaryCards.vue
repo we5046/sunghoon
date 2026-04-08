@@ -1,12 +1,21 @@
-<script setup lang="ts">
+<script setup>
 import { TrendingUp, TrendingDown, Wallet } from 'lucide-vue-next'
 import { computed } from 'vue'
 
-const props = defineProps<{
-  totalIncome: number
-  totalExpense: number
-  vertical?: boolean
-}>()
+const props = defineProps({
+  totalIncome: {
+    type: Number,
+    required: true,
+  },
+  totalExpense: {
+    type: Number,
+    required: true,
+  },
+  vertical: {
+    type: Boolean,
+    default: false,
+  },
+})
 
 const netProfit = computed(() => props.totalIncome - props.totalExpense)
 </script>

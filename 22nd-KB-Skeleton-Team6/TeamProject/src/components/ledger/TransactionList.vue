@@ -1,37 +1,34 @@
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
-import { ArrowDownRight, ArrowUpRight } from "lucide-vue-next";
+import { ArrowDownRight, ArrowUpRight } from 'lucide-vue-next'
 
-export interface Transaction {
-  id: string;
-  date: string;
-  type: "income" | "expense";
-  amount: number;
-  category: string;
-  memo: string;
-}
-
-const props = defineProps<{
-  transactions?: Transaction[]
-  selectedCategory?: string | null
-}>()
+const props = defineProps({
+  transactions: {
+    type: Array,
+    default: null,
+  },
+  selectedCategory: {
+    type: String,
+    default: null,
+  },
+})
 
 const mockTransactions = computed(() => {
   const data = props.transactions || [
-    { id: "1", date: "2026-04-01", type: "income", amount: 85000, category: "용돈", memo: "부모님 용돈" },
-    { id: "2", date: "2026-04-01", type: "expense", amount: 45000, category: "식비", memo: "마트 장보기" },
-    { id: "3", date: "2026-04-02", type: "expense", amount: 128000, category: "쇼핑", memo: "의류 구매" },
-    { id: "4", date: "2026-04-03", type: "expense", amount: 89000, category: "문화", memo: "영화 및 저녁" },
-    { id: "5", date: "2026-04-05", type: "income", amount: 3500000, category: "급여", memo: "4월 급여" },
-    { id: "6", date: "2026-04-05", type: "expense", amount: 450000, category: "주거통신", memo: "월세 및 관리비" },
-    { id: "7", date: "2026-04-07", type: "expense", amount: 234000, category: "식비", memo: "외식 및 배달" },
-    { id: "8", date: "2026-04-09", type: "income", amount: 120000, category: "부수입", memo: "프리랜서 작업" },
-    { id: "9", date: "2026-04-09", type: "expense", amount: 67000, category: "교통", memo: "주유 및 주차" },
-    { id: "10", date: "2026-04-11", type: "expense", amount: 156000, category: "쇼핑", memo: "생활용품 구매" },
-  ];
+    { id: '1', date: '2026-04-01', type: 'income', amount: 85000, category: '용돈', memo: '부모님 용돈' },
+    { id: '2', date: '2026-04-01', type: 'expense', amount: 45000, category: '식비', memo: '마트 장보기' },
+    { id: '3', date: '2026-04-02', type: 'expense', amount: 128000, category: '쇼핑', memo: '의류 구매' },
+    { id: '4', date: '2026-04-03', type: 'expense', amount: 89000, category: '문화', memo: '영화 및 저녁' },
+    { id: '5', date: '2026-04-05', type: 'income', amount: 3500000, category: '급여', memo: '4월 급여' },
+    { id: '6', date: '2026-04-05', type: 'expense', amount: 450000, category: '주거통신', memo: '월세 및 관리비' },
+    { id: '7', date: '2026-04-07', type: 'expense', amount: 234000, category: '식비', memo: '외식 및 배달' },
+    { id: '8', date: '2026-04-09', type: 'income', amount: 120000, category: '부수입', memo: '프리랜서 작업' },
+    { id: '9', date: '2026-04-09', type: 'expense', amount: 67000, category: '교통', memo: '주유 및 주차' },
+    { id: '10', date: '2026-04-11', type: 'expense', amount: 156000, category: '쇼핑', memo: '생활용품 구매' },
+  ]
 
   if (props.selectedCategory) {
-    return data.filter(t => t.category === props.selectedCategory)
+    return data.filter((t) => t.category === props.selectedCategory)
   }
   return data
 })
@@ -77,7 +74,7 @@ const mockTransactions = computed(() => {
           :class="transaction.type === 'income' ? 'text-primary' : ''"
           :style="transaction.type === 'expense' ? 'color: rgb(240,68,82);' : ''"
         >
-          {{ transaction.type === "income" ? "+" : "-" }}{{ transaction.amount.toLocaleString() }}원
+          {{ transaction.type === 'income' ? '+' : '-' }}{{ transaction.amount.toLocaleString() }}원
         </div>
       </div>
     </div>
