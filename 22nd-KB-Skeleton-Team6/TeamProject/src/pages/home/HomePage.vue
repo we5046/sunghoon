@@ -15,9 +15,8 @@ const handleDateClick = (date, data) => {
 </script>
 
 <template>
-  <div class="d-flex flex-column gap-4">
+  <div class="p-4 p-md-5 d-flex flex-column gap-4">
     <SummaryCards :totalIncome="3705000" :totalExpense="1070000" />
-
     <div class="row g-4">
       <div class="col-12 col-lg-8">
         <LedgerCalendar @dateClick="handleDateClick" />
@@ -26,15 +25,5 @@ const handleDateClick = (date, data) => {
         <ExpensePieChart />
       </div>
     </div>
-
-    <DateDetailDialog
-      v-if="selectedDate"
-      :isOpen="isDateDetailOpen"
-      @close="isDateDetailOpen = false"
-      :date="selectedDate.date"
-      :income="selectedDate.income"
-      :expense="selectedDate.expense"
-      :details="selectedDate.details || []"
-    />
   </div>
 </template>
