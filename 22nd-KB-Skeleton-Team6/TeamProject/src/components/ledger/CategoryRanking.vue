@@ -1,24 +1,22 @@
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 
-const props = defineProps<{
-  data?: {
-    category: string
-    amount: number
-    color: string
-    count: number
-  }[]
-}>()
+const props = defineProps({
+  data: {
+    type: Array,
+    default: null,
+  },
+})
 
 const mockData = computed(() => {
   const data = props.data || [
-    { category: "식비", amount: 450000, color: "#FF8A3D", count: 8 },
-    { category: "주거통신", amount: 450000, color: "#7B68EE", count: 1 },
-    { category: "쇼핑", amount: 284000, color: "#E91E63", count: 2 },
-    { category: "문화", amount: 89000, color: "#FFBC50", count: 1 },
-    { category: "교통", amount: 67000, color: "#4A90E2", count: 1 },
-    { category: "의료", amount: 50000, color: "#4CAF50", count: 1 },
-    { category: "기타", amount: 30000, color: "#9E9E9E", count: 1 },
+    { category: '식비', amount: 450000, color: '#FF8A3D', count: 8 },
+    { category: '주거통신', amount: 450000, color: '#7B68EE', count: 1 },
+    { category: '쇼핑', amount: 284000, color: '#E91E63', count: 2 },
+    { category: '문화', amount: 89000, color: '#FFBC50', count: 1 },
+    { category: '교통', amount: 67000, color: '#4A90E2', count: 1 },
+    { category: '의료', amount: 50000, color: '#4CAF50', count: 1 },
+    { category: '기타', amount: 30000, color: '#9E9E9E', count: 1 },
   ]
   return data.sort((a, b) => b.amount - a.amount).slice(0, 5)
 })

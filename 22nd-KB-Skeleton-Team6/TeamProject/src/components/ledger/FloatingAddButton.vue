@@ -1,9 +1,7 @@
-<script setup lang="ts">
+<script setup>
 import { Plus } from 'lucide-vue-next'
 
-const emit = defineEmits<{
-  (e: 'click'): void
-}>()
+const emit = defineEmits(['click'])
 </script>
 
 <template>

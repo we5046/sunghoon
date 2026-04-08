@@ -1,42 +1,40 @@
-<template>
-  <section class="home-page">
-    <h1 class="page-title">홈</h1>
-
-    <SummaryCards :income="summary.income" :expense="summary.expense" :balance="summary.balance" />
-
-    <div class="home-grid">
-      <ExpensePieChart :items="categoryExpenseList" />
-    </div>
-  </section>
-</template>
-
 <script setup>
-import { computed, onMounted } from 'vue';
-import { useLedgerStore } from '@/stores/ledger';
+import { ref } from 'vue';
 import SummaryCards from '@/components/home/SummaryCards.vue';
+import LedgerCalendar from '@/components/ledger/LedgerCalendar.vue';
 import ExpensePieChart from '@/components/home/ExpensePieChart.vue';
+import DateDetailDialog from '@/components/ledger/DateDetailDialog.vue';
 
-const ledgerStore = useLedgerStore();
+const isDateDetailOpen = ref(false);
+const selectedDate = ref(null);
 
-onMounted(() => {
-  ledgerStore.fetchTransactions();
-  ledgerStore.fetchCategories();
-});
-
-const summary = computed(() => ledgerStore.monthSummary);
-const categoryExpenseList = computed(() => ledgerStore.categoryExpenseList);
+const handleDateClick = (date, data) => {
+  selectedDate.value = data;
+  isDateDetailOpen.value = true;
+};
 </script>
 
-<style scoped>
-.page-title {
-  margin-bottom: 20px;
-  font-size: 28px;
-  font-weight: 700;
-}
+<template>
+  <div class="d-flex flex-column gap-4">
+    <SummaryCards :totalIncome="3705000" :totalExpense="1070000" />
 
-.home-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-</style>
+    <div class="row g-4">
+      <div class="col-12 col-lg-8">
+        <LedgerCalendar @dateClick="handleDateClick" />
+      </div>
+      <div class="col-12 col-lg-4 d-flex flex-column gap-4">
+        <ExpensePieChart />
+      </div>
+    </div>
+
+    <DateDetailDialog
+      v-if="selectedDate"
+      :isOpen="isDateDetailOpen"
+      @close="isDateDetailOpen = false"
+      :date="selectedDate.date"
+      :income="selectedDate.income"
+      :expense="selectedDate.expense"
+      :details="selectedDate.details || []"
+    />
+  </div>
+</template>

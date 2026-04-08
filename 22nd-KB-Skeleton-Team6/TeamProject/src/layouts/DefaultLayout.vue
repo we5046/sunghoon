@@ -1,25 +1,30 @@
-<template>
-  <div class="app-layout">
-    <Sidebar />
-    <main class="app-content">
-      <RouterView />
-    </main>
-  </div>
-</template>
-
 <script setup>
+import { ref } from 'vue';
 import Sidebar from '@/components/common/Sidebar.vue';
+import FloatingAddButton from '@/components/ledger/FloatingAddButton.vue';
+import AddLedgerDialog from '@/components/ledger/AddLedgerDialog.vue';
+
+const isAddDialogOpen = ref(false);
+
+const handleAddLedger = (data) => {
+  console.log('Added ledger entry:', data);
+};
 </script>
 
-<style scoped>
-.app-layout {
-  display: flex;
-  min-height: 100vh;
-}
+<template>
+  <div class="w-100 vh-100 d-flex" style="background-color: #f5f5f7;">
+    <Sidebar />
 
-.app-content {
-  flex: 1;
-  padding: 24px;
-  background-color: #f8f9fa;
-}
-</style>
+    <main class="flex-grow-1 overflow-auto p-4 p-md-5">
+      <RouterView />
+    </main>
+
+    <FloatingAddButton @click="isAddDialogOpen = true" />
+
+    <AddLedgerDialog
+      :isOpen="isAddDialogOpen"
+      @close="isAddDialogOpen = false"
+      @add="handleAddLedger"
+    />
+  </div>
+</template>

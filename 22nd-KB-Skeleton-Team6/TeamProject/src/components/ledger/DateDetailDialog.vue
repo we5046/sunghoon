@@ -1,38 +1,45 @@
-<script setup lang="ts">
+<script setup>
 import { X } from 'lucide-vue-next'
 import { computed } from 'vue'
 
-const props = defineProps<{
-  isOpen: boolean
-  date: number
-  income: number
-  expense: number
+const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false,
+  },
+  date: {
+    type: Number,
+    required: true,
+  },
+  income: {
+    type: Number,
+    default: 0,
+  },
+  expense: {
+    type: Number,
+    default: 0,
+  },
   details: {
-    id: string
-    type: 'income' | 'expense'
-    amount: number
-    category: string
-    memo: string
-  }[]
-}>()
+    type: Array,
+    default: () => [],
+  },
+})
 
-const emit = defineEmits<{
-  (e: 'close'): void
-}>()
+const emit = defineEmits(['close'])
 
 const mockDetails = computed(() => {
   if (props.details && props.details.length > 0) return props.details
   return [
     {
       id: '1',
-      type: 'expense' as const,
+      type: 'expense',
       amount: 45000,
       category: '식비',
       memo: '점심 회식',
     },
     {
       id: '2',
-      type: 'income' as const,
+      type: 'income',
       amount: 85000,
       category: '용돈',
       memo: '부모님 용돈',
